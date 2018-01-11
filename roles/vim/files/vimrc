@@ -1,0 +1,23 @@
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+autocmd BufRead,BufNewFile *.go set noexpandtab
+autocmd BufRead,BufNewFile *.yml,*.yaml,*.htm,*.html set tabstop=2 shiftwidth=2
+
+" Show tailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * redraw!
+
+" Automatic paste mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction

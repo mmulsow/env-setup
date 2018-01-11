@@ -1,0 +1,17 @@
+---
+- name: install vim
+  apt:
+    name: vim
+    state: present
+  become: true
+
+- name: write vimrc
+  copy:
+    src: vimrc
+    dest: "{{ ansible_env.HOME }}/.vimrc"
+
+- name: set vim as default editor
+  alternatives:
+    name: editor
+    path: /usr/bin/vim.basic
+  become: true
